@@ -1,0 +1,80 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Currency Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background-color: #f2f2f2;
+        }
+        .converter {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            width: 300px;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        select, input, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="converter">
+    <h2>Currency Converter</h2>
+    <input type="number" id="amount" placeholder="Enter amount" />
+    <select id="fromCurrency">
+        <option value="USD">USD</option>
+        <option value="EUR">EUR</option>
+        <option value="INR">INR</option>
+    </select>
+    <select id="toCurrency">
+        <option value="INR">INR</option>
+        <option value="USD">USD</option>
+        <option value="EUR">EUR</option>
+    </select>
+    <button onclick="convertCurrency()">Convert</button>
+    <div class="result" id="result"></div>
+</div>
+
+<script>
+    const rates = {
+        USD: { INR: 83.2, EUR: 0.92 },
+        INR: { USD: 0.012, EUR: 0.011 },
+        EUR: { USD: 1.09, INR: 90.3 }
+    };
+
+    function convertCurrency() {
+        const amount = parseFloat(document.getElementById('amount').value);
+        const from = document.getElementById('fromCurrency').value;
+        const to = document.getElementById('toCurrency').value;
+
+        if (isNaN(amount)) {
+            document.getElementById('result').innerText = "Please enter a valid amount.";
+            return;
+        }
+
+        if (from === to) {
+            document.getElementById('result').innerText = `${amount} ${from} = ${amount} ${to}`;
+            return;
+        }
+
+        const rate = rates[from][to];
+        const converted = (amount * rate).toFixed(2);
+        document.getElementById('result').innerText = `${amount} ${from} = ${converted} ${to}`;
+    }
+</script>
+
+</body>
+</html>
